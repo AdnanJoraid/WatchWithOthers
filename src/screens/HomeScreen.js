@@ -1,10 +1,40 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Grid, Button, ButtonGroup, Typography } from "@material-ui/core";
-import {Link} from 'react-router-dom'
-
+import { Link, useHistory  } from "react-router-dom";
+import { db } from "../database/firebase";
 function HomeScreen() {
+  const [roomId, setRoomId] = useState("");
+  const history = useHistory();
+
+  useEffect(() => {
+   roomAutoId() 
+  })
+
+  const roomAutoId = () => {
+    //generating a random unique id for roomId
+    var result = "";
+    var characters =
+      "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    var charactersLength = characters.length;
+    for (var i = 0; i < 20; i++) {
+      result += characters.charAt(
+        Math.floor(Math.random() * charactersLength)
+      );
+    }
+    setRoomId(result);
+  };
+
+  const onCreateRoomButtonHandler = () => {
+    db.collection('rooms').doc(roomId).set({
+      id: roomId
+    }).then(() => {
+        localStorage.setItem('isHost', true)
+        history.push({ pathname: `/room/${roomId}`, state: {roomId}}) 
+    }).catch((e) => console.log(e))
+    
+  };
   return (
-    <Grid container spacing={2} className='center'>
+    <Grid container spacing={2} className="center">
       <Grid item xs={12} align="center">
         <Typography variant="h3" compact="h3">
           WatchWithOthers
@@ -13,7 +43,13 @@ function HomeScreen() {
 
       <Grid item xs={12} align="center">
         <ButtonGroup disableElevation variant="contained" color="primary">
-          <Button style={{textDecoration: 'none'}} color="primary" to='/create' component={Link} >Create a Room</Button>
+          <Button
+            style={{ textDecoration: "none" }}
+            color="primary"
+            onClick={onCreateRoomButtonHandler}
+          >
+            Create a Room
+          </Button>
           <Button color="secondary">Join a Room</Button>
         </ButtonGroup>
       </Grid>
