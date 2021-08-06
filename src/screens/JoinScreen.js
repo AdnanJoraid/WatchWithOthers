@@ -13,6 +13,7 @@ function JoinScreen() {
         if (!doc.exists){
             alert('The room with the id given does not exist')
         }else{
+            localStorage.setItem(`isHost-${roomId}`, false)
             history.push(`/room/${roomId}`)
         }
         
@@ -32,7 +33,7 @@ function JoinScreen() {
         </Input>
       </Grid>
       <Grid item xs={12} align="center">
-        <Button disableElevation variant='contained' color='secondary' onClick={joinRoomHandler}>
+        <Button style={{ textDecoration: "none" }} disableElevation variant='contained' color='secondary' onClick={joinRoomHandler}>
           Join
         </Button>
       </Grid>

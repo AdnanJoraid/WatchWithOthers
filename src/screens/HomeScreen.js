@@ -52,7 +52,7 @@ function HomeScreen() {
           >
             Create a Room
           </Button>
-          <Button color="secondary" to='/join' component={Link}>Join a Room</Button>
+          <Button color="secondary" to='/join' component={Link} style={{color:'white' }}>Join a Room</Button>
         </ButtonGroup>
       </Grid>
     </Grid>
