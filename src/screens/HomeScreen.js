@@ -7,8 +7,8 @@ function HomeScreen() {
   const history = useHistory();
 
   useEffect(() => {
-   roomAutoId() 
-  })
+   setRoomId(roomAutoId())
+  }, [])
 
   const roomAutoId = () => {
     //generating a random unique id for roomId
@@ -16,19 +16,19 @@ function HomeScreen() {
     var characters =
       "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
     var charactersLength = characters.length;
-    for (var i = 0; i < 20; i++) {
+    for (var i = 0; i < 6; i++) {
       result += characters.charAt(
         Math.floor(Math.random() * charactersLength)
       );
     }
-    setRoomId(result);
+    return result
   };
 
   const onCreateRoomButtonHandler = () => {
     db.collection('rooms').doc(roomId).set({
       id: roomId
     }).then(() => {
-        localStorage.setItem('isHost', true)
+        localStorage.setItem(`isHost-${roomId}`, true)
         history.push({ pathname: `/room/${roomId}`, state: {roomId}}) 
     }).catch((e) => console.log(e))
     
