@@ -33,6 +33,8 @@ function HomeScreen() {
     }).catch((e) => console.log(e))
     
   };
+
+ 
   return (
     <Grid container spacing={2} className="center">
       <Grid item xs={12} align="center">
@@ -50,7 +52,7 @@ function HomeScreen() {
           >
             Create a Room
           </Button>
-          <Button color="secondary">Join a Room</Button>
+          <Button color="secondary" to='/join' component={Link}>Join a Room</Button>
         </ButtonGroup>
       </Grid>
     </Grid>
