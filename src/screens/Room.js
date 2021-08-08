@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import '../App.css'
 import { db } from "../database/firebase";
-import { Button, ButtonGroup, Typography } from "@material-ui/core";
+import { Typography } from "@material-ui/core";
 import youtube from "../api/youtube";
 import VideoList from "./VideoList";
 import Videoplayer from "./VideoPlayer";
