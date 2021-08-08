@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
 import { db } from "../database/firebase";
 import { Button, ButtonGroup } from "@material-ui/core";
 import youtube from "../api/youtube";
-import Video from "./Video";
 import VideoList from "./VideoList";
 import Videoplayer from "./VideoPlayer";
 import Search from "./Search";
@@ -12,7 +10,6 @@ import Search from "./Search";
 function Room(props) {
   const [videoMetaInfo, setVideoMetaInfo] = useState([]);
   const [selectedVideo, setSelectedVideo] = useState("");
-  const [urlExists, setUrlExists] = useState(false);
   const [urlIsDifferent, setUrlIsDifferent] = useState(false)
   const [currentUrl, setCurrentUrl] = useState('');
   const id = props.match.params.id;
@@ -34,8 +31,9 @@ function Room(props) {
     console.log(selectedVideo);
     await db.collection('rooms').doc(id).set({
       id: id, 
-      currentVideoUrl: selectedVideo, 
+      currentVideoUrl: `${selectedVideo}?autoplay=1`, 
     })
+   
     videoUrlDoesExist()
   }
 
@@ -43,21 +41,13 @@ function Room(props) {
     const dbDoc = await db.collection('rooms').doc(id);
     const doc = await dbDoc.get()
     if (doc.data().currentVideoUrl){
-      setUrlExists(true)
-      // console.log(doc.data().currentVideoUrl)
       if(doc.data().currentVideoUrl !== currentUrl){
         setCurrentUrl(doc.data().currentVideoUrl)
         setUrlIsDifferent(true)
-       
       }else{
         setUrlIsDifferent(false)
       }
-
-      
-
     }
-    
-
   }
   
 
@@ -74,14 +64,11 @@ function Room(props) {
       })
    
 
-    console.log(videoMetaInfo);
-    console.log(selectedVideo);
+
   };
   const onVideoSelected = (videoId) => {
     setSelectedVideo(videoId);
     confirmVideo()
-    console.log(selectedVideo);
-    console.log(urlExists)
   };
 
   if (isRoomHost === "true") {
@@ -125,7 +112,6 @@ function Room(props) {
     );
   } else {
       return (<div>
-        {/* {currentUrl !== selectedVideo ? window.location.reload() : } */}
       <Videoplayer videoId={currentUrl}/>
       </div>);
   }
