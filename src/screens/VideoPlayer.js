@@ -4,7 +4,7 @@ const Videoplayer = ({ videoId }) => {
   if (!videoId) {
     return (
       <p style={{ textAlign: "center", fontSize: "18px", fontWeight: "bold" }}>
-        Search for a video
+        Waiting for Host to select a video!
       </p>
     );
   }
@@ -13,7 +13,13 @@ const Videoplayer = ({ videoId }) => {
       <iframe
         title={videoId}
         className="video-iframe"
-        src={`https://www.youtube.com/embed/${videoId}`}
+        allow="autoplay" 
+        
+        style={{
+          pointerEvents: 'none',
+
+        }}
+        src={`https://www.youtube.com/embed/${videoId}?autoplay=1&mute=0&showinfo=0&controls=0`}
       />
     </div>
   );

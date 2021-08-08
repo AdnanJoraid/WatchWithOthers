@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { db } from "../database/firebase";
-import { Button, ButtonGroup } from "@material-ui/core";
+import { Button, ButtonGroup, Typography } from "@material-ui/core";
 import youtube from "../api/youtube";
 import VideoList from "./VideoList";
 import Videoplayer from "./VideoPlayer";
@@ -17,10 +17,10 @@ function Room(props) {
   
   
   useEffect(() => {
-    
     videoUrlDoesExist()
     db.collection('rooms').doc(id).onSnapshot((doc) => {
       setCurrentUrl(doc.data().currentVideoUrl)
+      
     })
         
   }, [selectedVideo, urlIsDifferent])
@@ -31,7 +31,7 @@ function Room(props) {
     console.log(selectedVideo);
     await db.collection('rooms').doc(id).set({
       id: id, 
-      currentVideoUrl: `${selectedVideo}?autoplay=1`, 
+      currentVideoUrl: `${selectedVideo}`, 
     })
    
     videoUrlDoesExist()
@@ -77,16 +77,9 @@ function Room(props) {
         
         <Search onSearch={onSearch}/>
         <div>
-          <ButtonGroup disableElevation variant="contained" color="danger">
-            
-            <Button
-              style={{ textDecoration: "none" }}
-              color="primary"
-              onClick={confirmVideo}
-            >
-              Confirm video
-            </Button>
-          </ButtonGroup>
+          <Typography variant='h6'>
+            Click twice on the video you want to select!
+          </Typography>
         </div>
         <div
           style={{
