@@ -13,6 +13,7 @@ function Room(props) {
   const [videoMetaInfo, setVideoMetaInfo] = useState([]);
   const [selectedVideo, setSelectedVideo] = useState("");
   const [urlExists, setUrlExists] = useState(false);
+  const [urlIsDifferent, setUrlIsDifferent] = useState(false)
   const [currentUrl, setCurrentUrl] = useState('');
   const id = props.match.params.id;
   const isRoomHost = localStorage.getItem(`isHost-${id}`);
@@ -21,12 +22,11 @@ function Room(props) {
   useEffect(() => {
     
     videoUrlDoesExist()
-    
+    db.collection('rooms').doc(id).onSnapshot((doc) => {
+      setCurrentUrl(doc.data().currentVideoUrl)
+    })
         
-    // setCurrentUrl('')
-    // window.location.reload()
-  
-  }, [selectedVideo])
+  }, [selectedVideo, urlIsDifferent])
 
  
 
@@ -47,12 +47,10 @@ function Room(props) {
       // console.log(doc.data().currentVideoUrl)
       if(doc.data().currentVideoUrl !== currentUrl){
         setCurrentUrl(doc.data().currentVideoUrl)
-        // window.location.reload()
-        
+        setUrlIsDifferent(true)
        
-        // componentDidMount()
-        
-       
+      }else{
+        setUrlIsDifferent(false)
       }
 
       
@@ -127,7 +125,6 @@ function Room(props) {
     );
   } else {
       return (<div>
-        <Button onClick={() => window.location.reload()}>Update </Button>
         {/* {currentUrl !== selectedVideo ? window.location.reload() : } */}
       <Videoplayer videoId={currentUrl}/>
       </div>);
