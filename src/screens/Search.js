@@ -1,5 +1,6 @@
 
 import React, { useState } from "react";
+import '../App.css'
 
 function Search({ onSearch }) {
   const [title, setTitle] = useState("");
@@ -18,7 +19,7 @@ function Search({ onSearch }) {
           onChange={(e) => setTitle(e.target.value)}
           id="video-search"
           type="text"
-          placeholder="enter search keyword"
+          placeholder="Type a video name"
         ></input>
         <button onClick={onSubmit}>Search</button>
       </div>

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import '../App.css'
 import { db } from "../database/firebase";
 import { Button, ButtonGroup, Typography } from "@material-ui/core";
 import youtube from "../api/youtube";
@@ -73,38 +74,33 @@ function Room(props) {
 
   if (isRoomHost === "true") {
     return (
-      <div>
+      <div className='App'>
         
         <Search onSearch={onSearch}/>
-        <div>
+   
+          <VideoList onVideoSelected={onVideoSelected} data={videoMetaInfo} />
           <Typography variant='h6'>
             Click twice on the video you want to select!
           </Typography>
-        </div>
-        <div
-          style={{
-            position: "absolute",
-            right: 0,
-            width: '400px',
-            marginRight: '50px',
-            padding: '10px',
-            border: '3px solid black',
-            overflow: 'scroll',
-            float: 'right'
-            
-          }}
-        >
-          <VideoList onVideoSelected={onVideoSelected} data={videoMetaInfo} />
-        </div>
-        <div
-      >
+        
+          
+    
+        <div className='center' style={{
+        marginLeft: '-285px'
+      }}>
+      
         <Videoplayer videoId={selectedVideo}/>
         </div>
        
       </div>
     );
   } else {
-      return (<div>
+      return (<div style={{
+        margin: 'auto',
+        width: '70%', 
+        padding: '40px'
+      }}>
+
       <Videoplayer videoId={currentUrl}/>
       </div>);
   }

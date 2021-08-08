@@ -5,22 +5,22 @@
     margin: 20px 0;
   }
   
-  .video > .title {
+.video > .title {
     text-align: center;
     padding: 10px;
     margin: 0;
     font-weight: 600;
     font-size: 14px;
-  }
-  .video-list {
+}
+.video-list {
     border-left: 1px solid lightgray;
     grid-row: span 2;
     padding: 0 20px;
     height: 100%;
-    overflow: auto;
-  }
+    overflow: visible;
+}
   
-  .video-player .video-iframe {
-    width: 1200px;
-    height: 700px;
-  }
+.video-player .video-iframe {
+    width: 1280px;
+    height: 720px;
+}
